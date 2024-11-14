@@ -1,21 +1,21 @@
 import { Blockchain, SandboxContract, TreasuryContract } from '@ton/sandbox';
 import { toNano } from '@ton/core';
-import { HelloWorld } from '../wrappers/HelloWorld';
+import { Integers } from '../wrappers/Integers';
 import '@ton/test-utils';
 
-describe('HelloWorld', () => {
+describe('Integers', () => {
     let blockchain: Blockchain;
     let deployer: SandboxContract<TreasuryContract>;
-    let helloWorld: SandboxContract<HelloWorld>;
+    let integers: SandboxContract<Integers>;
 
     beforeEach(async () => {
         blockchain = await Blockchain.create();
 
-        helloWorld = blockchain.openContract(await HelloWorld.fromInit());
+        integers = blockchain.openContract(await Integers.fromInit());
 
         deployer = await blockchain.treasury('deployer');
 
-        const deployResult = await helloWorld.send(
+        const deployResult = await integers.send(
             deployer.getSender(),
             {
                 value: toNano('0.05'),
@@ -28,7 +28,7 @@ describe('HelloWorld', () => {
 
         expect(deployResult.transactions).toHaveTransaction({
             from: deployer.address,
-            to: helloWorld.address,
+            to: integers.address,
             deploy: true,
             success: true,
         });
@@ -36,12 +36,18 @@ describe('HelloWorld', () => {
 
     it('should deploy', async () => {
         // the check is done inside beforeEach
-        // blockchain and helloWorld are ready to use
+        // blockchain and integers are ready to use
     });
 
-    it('should return the string hello world', async () => {
-        const helloMessage = await helloWorld.getGreeting();
-        expect(helloMessage).toEqual("Hello TACT!");
-        // console.log("Result: ", helloMessage);
+    it('should dump all the integer state to the console', async () => {
+        const caller = await blockchain.treasury('caller');
+        integers.send
+        await integers.send(
+            caller.getSender(),
+            {
+                value: toNano('0.05'),
+            },
+            "show all"
+        );
     })
 });

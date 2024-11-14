@@ -14,7 +14,7 @@ Then install yarn and project dependencies.
 ```bash
 npm i -g yarn
 yarn
-yarn build
+yarn build --all
 yarn test
 ```
 
