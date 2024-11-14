@@ -1,21 +1,21 @@
 import { Blockchain, SandboxContract, TreasuryContract } from '@ton/sandbox';
 import { toNano } from '@ton/core';
-import { Integers } from '../wrappers/Integers';
+import { Bools } from '../wrappers/Bools';
 import '@ton/test-utils';
 
-describe('Integers', () => {
+describe('Bools', () => {
     let blockchain: Blockchain;
     let deployer: SandboxContract<TreasuryContract>;
-    let integers: SandboxContract<Integers>;
+    let bools: SandboxContract<Bools>;
 
     beforeEach(async () => {
         blockchain = await Blockchain.create();
 
-        integers = blockchain.openContract(await Integers.fromInit());
+        bools = blockchain.openContract(await Bools.fromInit());
 
         deployer = await blockchain.treasury('deployer');
 
-        const deployResult = await integers.send(
+        const deployResult = await bools.send(
             deployer.getSender(),
             {
                 value: toNano('0.05'),
@@ -28,7 +28,7 @@ describe('Integers', () => {
 
         expect(deployResult.transactions).toHaveTransaction({
             from: deployer.address,
-            to: integers.address,
+            to: bools.address,
             deploy: true,
             success: true,
         });
@@ -36,17 +36,28 @@ describe('Integers', () => {
 
     it('should deploy', async () => {
         // the check is done inside beforeEach
-        // blockchain and integers are ready to use
+        // blockchain and bools are ready to use
     });
 
-    it('should dump all the integer state to the console', async () => {
+    it('should dump all the bool state to the console', async () => {
         const caller = await blockchain.treasury('caller');
-        await integers.send(
+        await bools.send(
             caller.getSender(),
             {
                 value: toNano('0.05'),
             },
             "show all"
+        );
+    })
+
+    it('should dump all the bools operations examples to the console', async () => {
+        const caller = await blockchain.treasury('caller');
+        await bools.send(
+            caller.getSender(),
+            {
+                value: toNano('0.05'),
+            },
+            "show ops"
         );
     })
 });

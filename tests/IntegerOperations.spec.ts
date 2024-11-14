@@ -1,21 +1,21 @@
 import { Blockchain, SandboxContract, TreasuryContract } from '@ton/sandbox';
 import { toNano } from '@ton/core';
-import { Integers } from '../wrappers/Integers';
+import { IntegerOperations } from '../wrappers/IntegerOperations';
 import '@ton/test-utils';
 
-describe('Integers', () => {
+describe('IntegerOperations', () => {
     let blockchain: Blockchain;
     let deployer: SandboxContract<TreasuryContract>;
-    let integers: SandboxContract<Integers>;
+    let integerOperations: SandboxContract<IntegerOperations>;
 
     beforeEach(async () => {
         blockchain = await Blockchain.create();
 
-        integers = blockchain.openContract(await Integers.fromInit());
+        integerOperations = blockchain.openContract(await IntegerOperations.fromInit());
 
         deployer = await blockchain.treasury('deployer');
 
-        const deployResult = await integers.send(
+        const deployResult = await integerOperations.send(
             deployer.getSender(),
             {
                 value: toNano('0.05'),
@@ -28,7 +28,7 @@ describe('Integers', () => {
 
         expect(deployResult.transactions).toHaveTransaction({
             from: deployer.address,
-            to: integers.address,
+            to: integerOperations.address,
             deploy: true,
             success: true,
         });
@@ -36,17 +36,17 @@ describe('Integers', () => {
 
     it('should deploy', async () => {
         // the check is done inside beforeEach
-        // blockchain and integers are ready to use
+        // blockchain and integerOperations are ready to use
     });
 
     it('should dump all the integer state to the console', async () => {
         const caller = await blockchain.treasury('caller');
-        await integers.send(
+        await integerOperations.send(
             caller.getSender(),
             {
                 value: toNano('0.05'),
             },
-            "show all"
+            "show ops"
         );
     })
 });
