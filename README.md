@@ -18,6 +18,14 @@ yarn build
 yarn test
 ```
 
+## Run specific tests
+
+To run a specific test add the `.only` annotation to the test you want to run and then run the specific file.
+
+```bash
+npx jest tests/HelloWorld.spec.ts
+```
+
 ## Project structure
 
 -   `contracts` - source code of all the smart contracts of the project and their dependencies.

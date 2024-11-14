@@ -17,6 +17,13 @@ contract SimpleCounter with Deployable {
     receive(msg: Add) {
         self.counter += msg.amount;
 
+        // example debug using dump
+        dump("self.counter: ");
+        dump(self.counter);
+
+        dump("msg.queryId: ");
+        dump(msg.queryId);
+
         // Notify the caller that the receiver was executed and forward remaining value back
         self.notify("Cashback".asComment());
     }

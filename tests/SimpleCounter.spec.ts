@@ -65,12 +65,16 @@ describe('SimpleCounter', () => {
                     amount: increaseBy,
                 }
             );
-
+            
             expect(increaseResult.transactions).toHaveTransaction({
                 from: increaser.address,
                 to: simpleCounter.address,
                 success: true,
             });
+            
+           // Example of checking for notification output in the result events array
+           const events = increaseResult.events.filter(event => event.type == 'message_sent');
+            // do something with events...
 
             const counterAfter = await simpleCounter.getCounter();
 
