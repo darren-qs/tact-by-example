@@ -11,7 +11,7 @@ describe('Optionals', () => {
     beforeEach(async () => {
         blockchain = await Blockchain.create();
 
-        optionals = blockchain.openContract(await Optionals.fromInit());
+        optionals = blockchain.openContract(await Optionals.fromInit(null, null, null));
 
         deployer = await blockchain.treasury('deployer');
 
