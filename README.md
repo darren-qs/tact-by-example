@@ -28,6 +28,12 @@ To run a specific test add the `.only` annotation to the test you want to run an
 npx jest tests/HelloWorld.spec.ts
 ```
 
+## stdlib traits 
+
+THe tact stdlib traits are located in:
+
+`node_modules/@tact-lang/compiler/stdlib/libs`
+
 ## Project structure
 
 -   `contracts` - source code of all the smart contracts of the project and their dependencies.
